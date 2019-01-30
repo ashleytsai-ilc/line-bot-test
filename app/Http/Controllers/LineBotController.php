@@ -20,7 +20,7 @@ class LineBotController extends Controller
 
     protected $bot;
 
-    public function replyMsg(ServerRequestInterface $req, ResponseInterface $res)
+    public function __invoke(ServerRequestInterface $req, ResponseInterface $res)
     {
         $this->httpClient = new CurlHTTPClient(env('LINEBOT_TOKEN'));
         $this->bot = new LINEBot($this->httpClient, 
