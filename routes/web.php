@@ -11,5 +11,5 @@
 |
 */
 
-Route::post('/', 'LineBotController');
+Route::post('/', 'LineBotController@replyMsg');
 
