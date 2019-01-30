@@ -11,5 +11,5 @@
 |
 */
 
-Route::post('/callback', 'LineBotController');
+Route::post('/', 'LineBotController');
 
