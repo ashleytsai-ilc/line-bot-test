@@ -49,7 +49,7 @@ class LineBotController extends Controller
                 }
             }
         }
-
+        dd($res);
         return $res;
     }
 }
