@@ -11,4 +11,5 @@
 |
 */
 
-// Route::get('/', 'LineBotController@replyMessage')->name('replyMsg');
+Route::post('/callback', 'LineBotController');
+
