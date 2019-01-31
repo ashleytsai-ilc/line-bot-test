@@ -52,9 +52,9 @@ class DictionaryService
                     }
                 }
 
-                $replyText = (object)[
+                $replyText = [
                     'type' => 'text',
-                    'text' => implode('<br>', $explains)
+                    'text' => implode(' ', $explains)
                 ];
 
                 $response = $this->bot->replyText($this->event->getReplyToken(), $replyText);
