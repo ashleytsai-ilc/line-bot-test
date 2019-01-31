@@ -36,6 +36,8 @@ class DictionaryService
     {
         $questionKeywords = ['是什麼', '什麼是', '意思', '查', '解釋'];
 
+        $response = $this->bot->replyText($this->event->getReplyToken(), '沒有進到if');
+
         foreach ($questionKeywords as $keyword) {
             if (preg_match_all('/[A-Za-z]+/i', $this->userText, $matches)) {
                 $word = $matches[0];
@@ -56,11 +58,11 @@ class DictionaryService
                     'text' => implode(' ', $explains)
                 ];
 
-                $response = $this->bot->replyText($this->event->getReplyToken(), '123');
-
-                return $response;
+                $response = $this->bot->replyText($this->event->getReplyToken(), implode(' ', $explains));
             }
         }
+
+        return $response;
     }
 }
 
