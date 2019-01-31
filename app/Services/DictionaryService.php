@@ -56,7 +56,7 @@ class DictionaryService
                     'text' => implode(' ', $explains)
                 ];
 
-                $response = $this->bot->replyText($this->event->getReplyToken(), implode(' ', $explains));
+                $response = $this->bot->replyText($this->event->getReplyToken(), '123');
 
                 return $response;
             }
