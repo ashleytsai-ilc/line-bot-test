@@ -49,7 +49,7 @@ class LineBotController extends Controller
                 $this->dictionaryService = new DictionaryService($this->bot, $event);
 
                 if ($event instanceof TextMessage) {
-                    $response = $this->dictionaryService->dictionary();
+                    $response = $this->dictionaryService->replySameMsg();
                 }
             }
         }
