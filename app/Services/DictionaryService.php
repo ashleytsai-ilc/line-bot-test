@@ -36,10 +36,10 @@ class DictionaryService
     {
         $questionKeywords = ['是什麼', '什麼是', '意思', '查', '解釋'];
 
-        $response = $this->bot->replyText($this->event->getReplyToken(), '沒有進到if');
-
         foreach ($questionKeywords as $keyword) {
             if (preg_match_all('/[A-Za-z]+/i', $this->userText, $matches)) {
+                $response = $this->bot->replyText($this->event->getReplyToken(), '進到if了');
+
                 $word = $matches[0];
 
                 $definitions = \App\Definition::where('word', $word)
