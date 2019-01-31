@@ -52,10 +52,10 @@ class DictionaryService
                     }
                 }
 
-                $replyText = json_encode([
+                $replyText = (object)[
                     'type' => 'text',
                     'text' => implode('<br>', $explains)
-                ]);
+                ];
 
                 $response = $this->bot->replyText($this->event->getReplyToken(), $replyText);
 
