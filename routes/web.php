@@ -13,3 +13,5 @@
 
 Route::post('/', 'LineBotController');
 
+Route::post('/sendText', 'LineBotController@sendText');
+

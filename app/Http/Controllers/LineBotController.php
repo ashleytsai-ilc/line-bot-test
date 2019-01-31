@@ -49,11 +49,39 @@ class LineBotController extends Controller
                 $this->dictionaryService = new DictionaryService($this->bot, $event);
 
                 if ($event instanceof TextMessage) {
-                    $response = $this->dictionaryService->replySameMsg();
+                    $response = $this->dictionaryService->dictionary();
                 }
             }
         }
         
         return $response;
+    }
+
+    public function sendText(Request $request)
+    {
+        $questionKeywords = ['是什麼', '什麼是', '意思', '查', '解釋'];
+
+        foreach ($questionKeywords as $keyword) {
+            if (preg_match_all('/[A-Za-z]+/i', $request->userText, $matches)) {
+                $word = $matches[0];
+
+                $definitions = \App\Definition::where('word', $word)
+                    ->select('speech', 'explainTw')
+                    ->get();
+
+                $explains = [];
+                foreach ($definitions as $definition) {
+                    $wordWithSpeech = '['.$definition->speech.']'.$definition->explainTw;
+                    if (!in_array($wordWithSpeech, $explains)) {
+                        $explains[] = $wordWithSpeech;
+                    }
+                }
+
+                return json_encode([
+                    'type' => 'text',
+                    'text' => implode('<br>', $explains)
+                ]);                
+            }
+        }
     }
 }

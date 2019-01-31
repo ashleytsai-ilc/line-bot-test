@@ -11,18 +11,53 @@ class DictionaryService
 
     protected $event;
 
+    protected $userText;
+
     public function __construct($bot, $event)
     {
         $this->bot = $bot;
         $this->event = $event;
+        $this->userText = $this->event->getText();
     }
 
+    /**
+     * This is for test
+     *
+     * @return [json] $res
+     */
     public function replySameMsg()
     {
-        $replyText = $this->event->getText();
-        $res = $this->bot->replyText($this->event->getReplyToken(), $replyText);
+        $res = $this->bot->replyText($this->event->getReplyToken(), $this->userText);
 
         return $res;
+    }
+
+    public function dictionary()
+    {
+        $questionKeywords = ['是什麼', '什麼是', '意思', '查', '解釋'];
+
+        foreach ($questionKeywords as $keyword) {
+            if (preg_match_all('/[A-Za-z]+/i', $this->userText, $matches)) {
+                $word = $matches[0];
+
+                $definitions = \App\Definition::where('word', $word)
+                    ->select('speech', 'explainTw')
+                    ->get();
+
+                $explains = [];
+                foreach ($definitions as $definition) {
+                    $wordWithSpeech = '['.$definition->speech.']'.$definition->explainTw;
+                    if (!in_array($wordWithSpeech, $explains)) {
+                        $explains[] = $wordWithSpeech;
+                    }
+                }
+
+                return json_encode([
+                    'type' => 'text',
+                    'text' => implode('<br>', $explains)
+                ]);
+            }
+        }
     }
 }
 
