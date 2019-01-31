@@ -27,29 +27,30 @@ class LineBotController extends Controller
             ['channelSecret' => env('LINEBOT_SECRET')]
         );
 
-        $signature = $req->getHeader('X-Line-Signature');
-        if (empty($signature)) {
-            return $res->withStatus(400, 'Bad Request');
-        }
+        // $signature = $req->getHeader('X-Line-Signature');
+        // if (empty($signature)) {
+        //     return $res->withStatus(400, 'Bad Request');
+        // }
 
-        // Check request with signature and parse request
-        try {
-            $events = $this->bot->parseEventRequest($req->getBody(), $signature[0]);
-        } catch (InvalidSignatureException $e) {
-            return $res->withStatus(400, 'Invalid signature');
-        } catch (InvalidEventRequestException $e) {
-            return $res->withStatus(400, "Invalid event request");
-        }
+        // // Check request with signature and parse request
+        // try {
+        //     $events = $this->bot->parseEventRequest($req->getBody(), $signature[0]);
+        // } catch (InvalidSignatureException $e) {
+        //     return $res->withStatus(400, 'Invalid signature');
+        // } catch (InvalidEventRequestException $e) {
+        //     return $res->withStatus(400, "Invalid event request");
+        // }
 
-        foreach ($events as $event) {
-            if ($event instanceof MessageEvent) {
-                if ($event instanceof TextMessage) {
-                    $replyText = $event->getText();
-                    $res = $this->bot->replyText($event->getReplyToken(), $replyText);
-                }
-            }
-        }
-        dd($res);
-        return $res;
+        // foreach ($events as $event) {
+        //     if ($event instanceof MessageEvent) {
+        //         if ($event instanceof TextMessage) {
+        //             $replyText = $event->getText();
+        //             $res = $this->bot->replyText($event->getReplyToken(), $replyText);
+        //         }
+        //     }
+        // }
+        
+        // return $res;
+        return 'ok';
     }
 }
