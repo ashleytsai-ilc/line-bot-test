@@ -52,10 +52,14 @@ class DictionaryService
                     }
                 }
 
-                return json_encode([
+                $replyText = json_encode([
                     'type' => 'text',
                     'text' => implode('<br>', $explains)
                 ]);
+
+                $response = $this->bot->replyText($this->event->getReplyToken(), $replyText);
+
+                return $response;
             }
         }
     }
