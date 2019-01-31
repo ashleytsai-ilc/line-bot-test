@@ -13,12 +13,15 @@ use LINE\LINEBot\Exception\InvalidEventRequestException;
 use LINE\LINEBot\Exception\InvalidSignatureException;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
+use App\Services\DictionaryService;
 
 class LineBotController extends Controller
 {
     protected $httpClient;
 
     protected $bot;
+
+    protected $dictionaryService;
 
     public function __invoke(ServerRequestInterface $req, ResponseInterface $res)
     {
@@ -43,13 +46,14 @@ class LineBotController extends Controller
 
         foreach ($events as $event) {
             if ($event instanceof MessageEvent) {
+                $this->dictionaryService = new DictionaryService($this->bot, $event);
+
                 if ($event instanceof TextMessage) {
-                    $replyText = $event->getText();
-                    $res = $this->bot->replyText($event->getReplyToken(), $replyText);
+                    $response = $this->dictionaryService->replySameMsg();
                 }
             }
         }
         
-        return $res;
+        return $response;
     }
 }
