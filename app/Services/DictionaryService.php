@@ -44,10 +44,10 @@ class DictionaryService
                     ->select('speech', 'explainTw')
                     ->get();
 
+                $response = $this->bot->replyText($this->event->getReplyToken(), 'definitions後');
+
                 $explains = [];
                 foreach ($definitions as $definition) {
-                    $response = $this->bot->replyText($this->event->getReplyToken(), '第二層foreach裡');
-
                     $wordWithSpeech = '['.$definition->speech.']'.$definition->explainTw;
                     if (!in_array($wordWithSpeech, $explains)) {
                         $explains[] = $wordWithSpeech;
