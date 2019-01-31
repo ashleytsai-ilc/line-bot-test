@@ -44,8 +44,6 @@ class DictionaryService
                     ->select('speech', 'explainTw')
                     ->get();
 
-                $response = $this->bot->replyText($this->event->getReplyToken(), 'definitions後');
-
                 $explains = [];
                 foreach ($definitions as $definition) {
                     $wordWithSpeech = '['.$definition->speech.']'.$definition->explainTw;
