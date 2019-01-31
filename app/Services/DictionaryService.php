@@ -46,12 +46,13 @@ class DictionaryService
 
                 $explains = [];
                 foreach ($definitions as $definition) {
+                    $response = $this->bot->replyText($this->event->getReplyToken(), '第二層foreach裡');
+
                     $wordWithSpeech = '['.$definition->speech.']'.$definition->explainTw;
                     if (!in_array($wordWithSpeech, $explains)) {
                         $explains[] = $wordWithSpeech;
                     }
                 }
-                $response = $this->bot->replyText($this->event->getReplyToken(), 'replyText前');
 
                 $replyText = [
                     'text' => implode(' ', $explains)
