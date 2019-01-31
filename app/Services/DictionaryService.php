@@ -38,8 +38,6 @@ class DictionaryService
 
         foreach ($questionKeywords as $keyword) {
             if (preg_match_all('/[A-Za-z]+/i', $this->userText, $matches)) {
-                $response = $this->bot->replyText($this->event->getReplyToken(), '進到if了');
-
                 $word = $matches[0];
 
                 $definitions = \App\Definition::where('word', $word)
@@ -53,6 +51,7 @@ class DictionaryService
                         $explains[] = $wordWithSpeech;
                     }
                 }
+                $response = $this->bot->replyText($this->event->getReplyToken(), 'replyText前');
 
                 $replyText = [
                     'text' => implode(' ', $explains)
