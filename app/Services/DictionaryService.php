@@ -34,31 +34,30 @@ class DictionaryService
 
     public function dictionary()
     {
-        $questionKeywords = ['是什麼', '什麼是', '意思', '查', '解釋'];
+        $questionKeywords = '是什麼|什麼是|意思|查|解釋';
 
-        foreach ($questionKeywords as $keyword) {
-            if (preg_match_all('/[A-Za-z]+/i', $this->userText, $matches)) {
-                $word = $matches[0];
-
-                $definitions = \App\Definition::where('word', $word)
-                    ->select('speech', 'explainTw')
-                    ->get();
-
-                $explains = [];
-                foreach ($definitions as $definition) {
-                    $wordWithSpeech = '['.$definition->speech.']'.$definition->explainTw;
-                    if (!in_array($wordWithSpeech, $explains)) {
-                        $explains[] = $wordWithSpeech;
-                    }
-                }
-
-                $replyText = [
-                    'text' => implode(' ', $explains)
-                ];
-
-                $response = $this->bot->replyText($this->event->getReplyToken(), implode(' ', $explains));
-            }
+        if (!preg_match("/[$questionKeywords]+/u", $this->userText)) {
+            return $this->replySameMsg();
         }
+
+        if (preg_match_all('/[A-Za-z]+/i', $this->userText, $matches)) {
+            $word = $matches[0];
+
+            $definitions = \App\Definition::where('word', $word)
+                            ->select('speech', 'explainTw')
+                            ->get();
+
+            $explains = [];
+            foreach ($definitions as $definition) {
+                $wordWithSpeech = '['.$definition->speech.']'.$definition->explainTw;
+                if (!in_array($wordWithSpeech, $explains)) {
+                    $explains[] = $wordWithSpeech;
+                }
+            }
+
+            $response = $this->bot->replyText($this->event->getReplyToken(), implode(' ', $explains));
+        }
+        
 
         return $response;
     }

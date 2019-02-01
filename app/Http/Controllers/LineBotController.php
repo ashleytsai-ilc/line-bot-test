@@ -59,15 +59,15 @@ class LineBotController extends Controller
 
     public function sendText(Request $request)
     {
-        $questionKeywords = ['是什麼', '什麼是', '意思', '查', '解釋'];
-
-        foreach ($questionKeywords as $keyword) {
+        $questionKeywords = '是什麼|什麼是|意思|查|解釋';
+        
+        if (preg_match("/[$questionKeywords]+/u", $request->userText, $matches)) {
             if (preg_match_all('/[A-Za-z]+/i', $request->userText, $matches)) {
                 $word = $matches[0];
 
                 $definitions = \App\Definition::where('word', $word)
-                    ->select('speech', 'explainTw')
-                    ->get();
+                                ->select('speech', 'explainTw')
+                                ->get();
 
                 $explains = [];
                 foreach ($definitions as $definition) {
@@ -80,7 +80,7 @@ class LineBotController extends Controller
                 return json_encode([
                     'type' => 'text',
                     'text' => implode('<br>', $explains)
-                ]);                
+                ]);
             }
         }
     }
