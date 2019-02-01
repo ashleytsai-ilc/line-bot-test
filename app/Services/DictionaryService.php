@@ -43,7 +43,7 @@ class DictionaryService
         if (preg_match_all('/[A-Za-z]+/i', $this->userText, $matches)) {
             $word = $matches[0];
 
-            $definitions = \App\Definition::where('word', $word)
+            $definitions = Definition::where('word', $word)
                             ->select('speech', 'explainTw')
                             ->get();
 
