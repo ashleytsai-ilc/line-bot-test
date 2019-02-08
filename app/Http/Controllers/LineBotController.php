@@ -15,6 +15,7 @@ use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use App\Services\DictionaryService;
 use App\Services\CarouselService;
+use Illuminate\Support\Facades\Log;
 
 class LineBotController extends Controller
 {
@@ -53,6 +54,7 @@ class LineBotController extends Controller
                     $questionKeywords = 'help|?|選單';
 
                     if (preg_match("/[$questionKeywords]+/u", $request->userText)) {
+                        Log::info('before carouselService..');
                         $this->carouselService = new CarouselService($this->bot, $event);
 
                         $response = $this->carouselService->carouselTemplate();
@@ -70,6 +72,7 @@ class LineBotController extends Controller
 
     public function sendText(Request $request)
     {
-        
+        Log::info('sendText...');
+        return 'sendText';
     }
 }
