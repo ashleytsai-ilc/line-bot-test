@@ -29,6 +29,8 @@ class LineBotController extends Controller
 
     public function __invoke(ServerRequestInterface $req, ResponseInterface $res)
     {
+        Log::info('begining..');
+        
         $this->httpClient = new CurlHTTPClient(env('LINEBOT_TOKEN'));
         $this->bot = new LINEBot($this->httpClient, 
             ['channelSecret' => env('LINEBOT_SECRET')]
@@ -47,6 +49,7 @@ class LineBotController extends Controller
         } catch (InvalidEventRequestException $e) {
             return $res->withStatus(400, "Invalid event request");
         }
+        Log::info('before foreach..');
 
         foreach ($events as $event) {
             if ($event instanceof MessageEvent) {
