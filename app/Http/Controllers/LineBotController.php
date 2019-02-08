@@ -29,8 +29,6 @@ class LineBotController extends Controller
 
     public function __invoke(ServerRequestInterface $req, ResponseInterface $res)
     {
-        Log::info('begining..');
-        
         $this->httpClient = new CurlHTTPClient(env('LINEBOT_TOKEN'));
         $this->bot = new LINEBot($this->httpClient, 
             ['channelSecret' => env('LINEBOT_SECRET')]
@@ -49,24 +47,21 @@ class LineBotController extends Controller
         } catch (InvalidEventRequestException $e) {
             return $res->withStatus(400, "Invalid event request");
         }
-        Log::info('before foreach..');
 
         foreach ($events as $event) {
             if ($event instanceof MessageEvent) {
                 if ($event instanceof TextMessage) {
                     $questionKeywords = 'help|?|選單';
-                    Log::info('not into preg_match..');
 
-                    // if (preg_match("/[$questionKeywords]+/u", $request->userText)) {
-                    //     Log::info('before carouselService..');
-                    //     $this->carouselService = new CarouselService($this->bot, $event);
+                    if (preg_match("/[$questionKeywords]+/u", $request->userText)) {
+                        $this->carouselService = new CarouselService($this->bot, $event);
 
-                    //     $response = $this->carouselService->carouselTemplate();
-                    // } else {
+                        $response = $this->carouselService->carouselTemplate();
+                    } else {
                         $this->dictionaryService = new DictionaryService($this->bot, $event);
 
                         $response = $this->dictionaryService->dictionary();
-                    // }
+                    }
                 }
             }
         }
