@@ -52,6 +52,7 @@ class LineBotController extends Controller
             if ($event instanceof MessageEvent) {
                 if ($event instanceof TextMessage) {
                     $questionKeywords = 'help|?|選單';
+                    Log::info('not into preg_match..');
 
                     if (preg_match("/[$questionKeywords]+/u", $request->userText)) {
                         Log::info('before carouselService..');
