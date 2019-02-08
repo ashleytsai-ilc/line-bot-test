@@ -29,6 +29,7 @@ class LineBotController extends Controller
 
     public function __invoke(ServerRequestInterface $req, ResponseInterface $res)
     {
+        Log::info('begining...');
         $this->httpClient = new CurlHTTPClient(env('LINEBOT_TOKEN'));
         $this->bot = new LINEBot($this->httpClient, 
             ['channelSecret' => env('LINEBOT_SECRET')]
