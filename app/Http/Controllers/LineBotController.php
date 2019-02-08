@@ -14,6 +14,7 @@ use LINE\LINEBot\Exception\InvalidSignatureException;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use App\Services\DictionaryService;
+use App\Services\CarouselService;
 
 class LineBotController extends Controller
 {
@@ -22,6 +23,8 @@ class LineBotController extends Controller
     protected $bot;
 
     protected $dictionaryService;
+
+    protected $carouselService;
 
     public function __invoke(ServerRequestInterface $req, ResponseInterface $res)
     {
@@ -46,10 +49,18 @@ class LineBotController extends Controller
 
         foreach ($events as $event) {
             if ($event instanceof MessageEvent) {
-                $this->dictionaryService = new DictionaryService($this->bot, $event);
-
                 if ($event instanceof TextMessage) {
-                    $response = $this->dictionaryService->dictionary();
+                    $questionKeywords = 'help|?|選單';
+
+                    if (preg_match("/[$questionKeywords]+/u", $request->userText)) {
+                        $this->carouselService = new CarouselService($this->bot, $event);
+
+                        $response = $this->carouselService->carouselTemplate();
+                    } else {
+                        $this->dictionaryService = new DictionaryService($this->bot, $event);
+
+                        $response = $this->dictionaryService->dictionary();
+                    }
                 }
             }
         }
@@ -59,29 +70,6 @@ class LineBotController extends Controller
 
     public function sendText(Request $request)
     {
-        $questionKeywords = '是什麼|什麼是|意思|查|解釋';
         
-        if (preg_match("/[$questionKeywords]+/u", $request->userText, $matches)) {
-            if (preg_match_all('/[A-Za-z]+/i', $request->userText, $matches)) {
-                $word = $matches[0];
-
-                $definitions = \App\Definition::where('word', $word)
-                                ->select('speech', 'explainTw')
-                                ->get();
-
-                $explains = [];
-                foreach ($definitions as $definition) {
-                    $wordWithSpeech = '['.$definition->speech.']'.$definition->explainTw;
-                    if (!in_array($wordWithSpeech, $explains)) {
-                        $explains[] = $wordWithSpeech;
-                    }
-                }
-
-                return json_encode([
-                    'type' => 'text',
-                    'text' => implode('<br>', $explains)
-                ]);
-            }
-        }
     }
 }
