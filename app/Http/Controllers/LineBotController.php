@@ -54,16 +54,16 @@ class LineBotController extends Controller
                     $questionKeywords = 'help|?|選單';
                     Log::info('not into preg_match..');
 
-                    if (preg_match("/[$questionKeywords]+/u", $request->userText)) {
-                        Log::info('before carouselService..');
-                        $this->carouselService = new CarouselService($this->bot, $event);
+                    // if (preg_match("/[$questionKeywords]+/u", $request->userText)) {
+                    //     Log::info('before carouselService..');
+                    //     $this->carouselService = new CarouselService($this->bot, $event);
 
-                        $response = $this->carouselService->carouselTemplate();
-                    } else {
+                    //     $response = $this->carouselService->carouselTemplate();
+                    // } else {
                         $this->dictionaryService = new DictionaryService($this->bot, $event);
 
                         $response = $this->dictionaryService->dictionary();
-                    }
+                    // }
                 }
             }
         }
