@@ -55,9 +55,10 @@ class LineBotController extends Controller
                     
                     if (preg_match("/[$questionKeywords]+/u", $event->getText())) {
                         $this->carouselService = new CarouselService($this->bot, $event);
+                        dd(123);
 
                         $response = $this->carouselService->carouselTemplate();
-                        dd(123);
+                        
                     } else {
                         $this->dictionaryService = new DictionaryService($this->bot, $event);
 
