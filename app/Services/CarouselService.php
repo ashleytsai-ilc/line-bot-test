@@ -32,7 +32,7 @@ class CarouselService
         $templateBuilder = new CarouselTemplateBuilder([$templateColumnBuilder, $templateColumnBuilder, $templateColumnBuilder]);
         
 
-        $templateMsg = new TemplateMessageBuilder('This is a carousel template', $templateColumnBuilder);
+        $templateMsg = new TemplateMessageBuilder('This is a carousel template', $templateBuilder);
 
         // $result = json_encode($templateMsg->buildMessage());
 

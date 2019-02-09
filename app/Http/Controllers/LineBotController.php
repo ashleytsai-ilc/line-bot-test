@@ -71,7 +71,20 @@ class LineBotController extends Controller
 
     public function sendText(Request $request)
     {
-        Log::info('sendText...');
-        return 'sendText';
+        $thumbnailImageUrl = 'https://scontent.ftpe8-1.fna.fbcdn.net/v/t1.0-9/13567248_1402023999824169_896253512501907636_n.jpg?_nc_cat=109&_nc_ht=scontent.ftpe8-1.fna&oh=61df15a39e3c48cb97411861ffc07c32&oe=5CFC51EA';
+
+        $actionBuilders = new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('This is label', 'This is action text');
+        
+        $templateColumnBuilder = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder('This is title', 'This is text', $thumbnailImageUrl, [$actionBuilders, $actionBuilders]);
+        
+        $templateBuilder = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder([$templateColumnBuilder, $templateColumnBuilder, $templateColumnBuilder]);
+        
+
+        $templateMsg = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('This is a carousel template', $templateBuilder);
+
+        // $result = json_encode($templateMsg->buildMessage());
+        
+        return response()->json($templateMsg->buildMessage());
+
     }
 }
