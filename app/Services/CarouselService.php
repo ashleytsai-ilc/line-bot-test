@@ -34,8 +34,6 @@ class CarouselService
 
         $templateMsg = new TemplateMessageBuilder('This is a carousel template', $templateColumnBuilder);
 
-        dd(123);
-
         $result = json_encode($templateMsg->buildMessage());
         $response = $this->bot->replyText($this->replyToken, $result);
 
