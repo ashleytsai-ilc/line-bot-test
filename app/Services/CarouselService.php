@@ -32,7 +32,7 @@ class CarouselService
         $templateBuilder = new CarouselTemplateBuilder([$templateColumnBuilder, $templateColumnBuilder, $templateColumnBuilder]);
         
 
-        $templateMsg = new TemplateMessageBuilder('', $templateBuilder);
+        $templateMsg = new TemplateMessageBuilder('aaa', $templateBuilder);
 
         $response = $this->bot->replyMessage($this->replyToken, $templateMsg);
         
