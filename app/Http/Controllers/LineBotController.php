@@ -29,7 +29,6 @@ class LineBotController extends Controller
 
     public function __invoke(ServerRequestInterface $req, ResponseInterface $res)
     {
-        Log::info('begining...');
         $this->httpClient = new CurlHTTPClient(env('LINEBOT_TOKEN'));
         $this->bot = new LINEBot($this->httpClient, 
             ['channelSecret' => env('LINEBOT_SECRET')]
@@ -58,6 +57,7 @@ class LineBotController extends Controller
                         $this->carouselService = new CarouselService($this->bot, $event);
 
                         $response = $this->carouselService->carouselTemplate();
+                        dd(123);
                     } else {
                         $this->dictionaryService = new DictionaryService($this->bot, $event);
 
