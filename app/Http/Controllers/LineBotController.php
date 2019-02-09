@@ -53,7 +53,7 @@ class LineBotController extends Controller
             if ($event instanceof MessageEvent) {
                 if ($event instanceof TextMessage) {
                     $questionKeywords = 'help|?|選單';
-
+                    dd('after keywords..');
                     if (preg_match("/[$questionKeywords]+/u", $request->userText)) {
                         $this->carouselService = new CarouselService($this->bot, $event);
 
