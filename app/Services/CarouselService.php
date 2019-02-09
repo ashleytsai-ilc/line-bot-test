@@ -37,7 +37,7 @@ class CarouselService
         // $result = json_encode($templateMsg->buildMessage());
 
         $response = $this->bot->replyMessage($this->replyToken, $templateMsg);
-        dd(123);
+        
         return $response;
     }
 }
