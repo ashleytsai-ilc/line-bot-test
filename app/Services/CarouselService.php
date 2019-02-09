@@ -28,13 +28,14 @@ class CarouselService
         
 
         $templateColumnBuilder = new CarouselColumnTemplateBuilder('This is title', 'This is text', $thumbnailImageUrl, [$actionBuilders, $actionBuilders]);
-        dd(123);
+        
         $templateBuilder = new CarouselTemplateBuilder([$templateColumnBuilder, $templateColumnBuilder, $templateColumnBuilder]);
         
 
         $templateMsg = new TemplateMessageBuilder('This is a carousel template', $templateColumnBuilder);
 
-        
+        dd(123);
+
         $result = json_encode($templateMsg->buildMessage());
         $response = $this->bot->replyText($this->replyToken, $result);
 
