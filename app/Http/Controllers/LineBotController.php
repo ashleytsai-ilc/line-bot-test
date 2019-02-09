@@ -57,8 +57,6 @@ class LineBotController extends Controller
                         $carouselService = new CarouselService($this->bot, $event);
 
                         $response = $carouselService->carouselTemplate();
-                        dd(123);
-
                     } else {
                         $dictionaryService = new DictionaryService($this->bot, $event);
 
