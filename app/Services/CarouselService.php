@@ -26,11 +26,11 @@ class CarouselService
 
         $actionBuilders = new MessageTemplateActionBuilder('This is label', 'This is action text');
         
-        $templateColumnBuilder = new CarouselColumnTemplateBuilder('This is title', 'This is text', $thumbnailImageUrl, $actionBuilders);
+        $templateColumnBuilder = new CarouselColumnTemplateBuilder('This is title', 'This is text', $thumbnailImageUrl, $actionBuilders->buildTemplateAction());
         dd(123);
 
-        $templateBuilder = new CarouselTemplateBuilder($templateColumnBuilder);
-        $templateMsg = new TemplateMessageBuilder('This is a carousel template', $templateBuilder);
+        $templateBuilder = new CarouselTemplateBuilder($templateColumnBuilder->buildTemplate());
+        $templateMsg = new TemplateMessageBuilder('This is a carousel template', $templateBuilder->buildTemplate());
 
         $result = json_encode($templateMsg->buildMessage());
         $response = $this->bot->replyText($this->replyToken, $result);
