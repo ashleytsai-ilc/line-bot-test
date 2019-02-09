@@ -28,9 +28,8 @@ class CarouselService
         
 
         $templateColumnBuilder = new CarouselColumnTemplateBuilder('This is title', 'This is text', $thumbnailImageUrl, $actionBuilders);
-        dd(123);
-
-        // $templateBuilder = new CarouselTemplateBuilder($templateColumnBuilder->buildTemplate());
+        dd(21);
+        $templateBuilder = new CarouselTemplateBuilder([$templateColumnBuilder, $templateColumnBuilder, $templateColumnBuilder]);
         
 
         $templateMsg = new TemplateMessageBuilder('This is a carousel template', $templateColumnBuilder);
