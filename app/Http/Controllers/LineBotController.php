@@ -65,7 +65,7 @@ class LineBotController extends Controller
                 }
             }
         }
-        
+        dd(123);
         return $response;
     }
 
