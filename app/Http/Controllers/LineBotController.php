@@ -51,16 +51,12 @@ class LineBotController extends Controller
         foreach ($events as $event) {
             if ($event instanceof MessageEvent) {
                 if ($event instanceof TextMessage) {
-                    $questionKeywords = 'help|?|選單';
+                    $questionKeywords = ['help', '?', '選單'];
                     
-                    if (preg_match("/[$questionKeywords]+/u", $event->getText())) {
+                    if (in_array($event->getText(), $questionKeywords)) {
                         $carouselService = new CarouselService($this->bot, $event);
 
                         $response = $carouselService->carouselTemplate();
-                    } else {
-                        $dictionaryService = new DictionaryService($this->bot, $event);
-
-                        $response = $dictionaryService->dictionary();
                     }
                 }
             }
@@ -71,6 +67,15 @@ class LineBotController extends Controller
 
     public function sendText(Request $request)
     {
+        $questionKeywords = ['help', '?', '選單'];
+                    
+        foreach ($questionKeywords as $keyword) {
+            if ($keyword == $request->word) {
+                return 'in question keywords';
+            }
+        }
+        return 'not in question keywords';
+
         $thumbnailImageUrl = 'https://scontent.ftpe8-1.fna.fbcdn.net/v/t1.0-9/13567248_1402023999824169_896253512501907636_n.jpg?_nc_cat=109&_nc_ht=scontent.ftpe8-1.fna&oh=61df15a39e3c48cb97411861ffc07c32&oe=5CFC51EA';
 
         $actionBuilders = new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('This is label', 'This is action text');
@@ -79,12 +84,8 @@ class LineBotController extends Controller
         
         $templateBuilder = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder([$templateColumnBuilder, $templateColumnBuilder, $templateColumnBuilder]);
         
-
         $templateMsg = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('This is a carousel template', $templateBuilder);
-
-        // $result = json_encode($templateMsg->buildMessage());
         
         return response()->json($templateMsg->buildMessage());
-
     }
 }
