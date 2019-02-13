@@ -14,7 +14,7 @@ use LINE\LINEBot\Exception\InvalidSignatureException;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use App\Services\DictionaryService;
-use App\Services\CarouselService;
+use App\Services\TemplateService;
 use Illuminate\Support\Facades\Log;
 
 class LineBotController extends Controller
@@ -24,8 +24,6 @@ class LineBotController extends Controller
     protected $bot;
 
     protected $dictionaryService;
-
-    protected $carouselService;
 
     public function __invoke(ServerRequestInterface $req, ResponseInterface $res)
     {
@@ -51,13 +49,7 @@ class LineBotController extends Controller
         foreach ($events as $event) {
             if ($event instanceof MessageEvent) {
                 if ($event instanceof TextMessage) {
-                    $questionKeywords = ['help', '?', '選單'];
-                    
-                    if (in_array($event->getText(), $questionKeywords)) {
-                        $carouselService = new CarouselService($this->bot, $event);
-
-                        $response = $carouselService->carouselTemplate();
-                    }
+                    $response = new TemplateService($this->bot, $event);
                 }
             }
         }
