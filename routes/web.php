@@ -14,4 +14,5 @@
 Route::post('/', 'LineBotController');
 
 Route::post('/sendText', 'LineBotController@sendText');
+Route::post('/reply_action', 'EchoBotController@replyMsg');
 
