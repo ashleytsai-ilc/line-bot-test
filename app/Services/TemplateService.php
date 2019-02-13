@@ -80,7 +80,9 @@ class TemplateService
         $actionBuilder = new MessageTemplateActionBuilder('只有一個按鈕', '只有一個按鈕');
 
         // 組合成規定陣列
-        $templateMsg = new ButtonTemplateBuilder('This is title'[$actionBuilder]);
+        $templateBuilder = new ButtonTemplateBuilder('This is button title', 'This is button text', $thumbnailImageUrl, [$actionBuilder]);
+
+        $templateMsg = new TemplateMessageBuilder('This is buttons template', $templateBuilder);
 
         return $templateMsg;
     }
@@ -92,7 +94,9 @@ class TemplateService
         $noActionBuilder = new MessageTemplateActionBuilder('no', 'no');
 
         // 組合成規定陣列
-        $templateMsg = new ConfirmTemplateBuilder('Are you sure?', [$yesActionBuilder, $noActionBuilder]);
+        $templateBuilder = new ConfirmTemplateBuilder('Are you sure?', [$yesActionBuilder, $noActionBuilder]);
+
+        $templateMsg = new TemplateMessageBuilder('This is confirm template', $templateBuilder);
 
         return $templateMsg;
     }

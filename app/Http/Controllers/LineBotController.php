@@ -59,25 +59,17 @@ class LineBotController extends Controller
 
     public function sendText(Request $request)
     {
-        $questionKeywords = ['help', '?', '選單'];
-                    
-        foreach ($questionKeywords as $keyword) {
-            if ($keyword == $request->word) {
-                return 'in question keywords';
-            }
-        }
-        return 'not in question keywords';
+        // 卡片的圖像
+        $thumbnailImageUrl = 'https://i.ytimg.com/vi/GNnM-LSa5OQ/maxresdefault.jpg';
 
-        $thumbnailImageUrl = 'https://scontent.ftpe8-1.fna.fbcdn.net/v/t1.0-9/13567248_1402023999824169_896253512501907636_n.jpg?_nc_cat=109&_nc_ht=scontent.ftpe8-1.fna&oh=61df15a39e3c48cb97411861ffc07c32&oe=5CFC51EA';
+        // 卡片中選項的template
+        $actionBuilder = new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('只有一個按鈕', '只有一個按鈕');
+        
+        // 組合成規定陣列
+        $templateBuilder = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder('This is button title', 'This is button text', $thumbnailImageUrl, [$actionBuilder]);
+        
+        $templateMsg = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('This is buttons template', $templateBuilder);
 
-        $actionBuilders = new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('This is label', 'This is action text');
-        
-        $templateColumnBuilder = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder('This is title', 'This is text', $thumbnailImageUrl, [$actionBuilders, $actionBuilders]);
-        
-        $templateBuilder = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder([$templateColumnBuilder, $templateColumnBuilder, $templateColumnBuilder]);
-        
-        $templateMsg = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('This is a carousel template', $templateBuilder);
-        
         return response()->json($templateMsg->buildMessage());
     }
 }
