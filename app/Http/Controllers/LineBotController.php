@@ -52,6 +52,7 @@ class LineBotController extends Controller
             if ($event instanceof MessageEvent) {
                 if ($event instanceof TextMessage) {
                     $response = new TemplateService($this->bot, $event);
+                    return $response;
                 }
             } elseif ($event instanceof OtherEvent) {
                 dd(123);
@@ -61,8 +62,6 @@ class LineBotController extends Controller
                 }
             }
         }
-        
-        return $response;
     }
 
     public function sendText(Request $request)
