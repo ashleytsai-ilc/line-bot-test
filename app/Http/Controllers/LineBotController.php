@@ -54,7 +54,7 @@ class LineBotController extends Controller
                     $response = new TemplateService($this->bot, $event);
                     return $response;
                 }
-            } elseif ($event instanceof OtherEvent) {
+            } elseif ($event instanceof OtherEvent) {a
                 if ($event instanceof FollowEvent) {
                     $userService = new UserService($this->bot, $event);
                     $userService->create();
