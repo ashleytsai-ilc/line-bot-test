@@ -10,6 +10,7 @@
 <body>
     <div class="container">
     <form class="mt-3" action="{{ route('bind') }}" method="POST">
+        {{ csrf_field() }}
         <input type="hidden" name="userId" value="{{ $userId }}">
         <div class="form-group row">
             <label for="studentId" class="col-sm-1 col-form-label">學號</label>
