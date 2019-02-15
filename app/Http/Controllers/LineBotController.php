@@ -63,9 +63,6 @@ class LineBotController extends Controller
 
     public function sendText(Request $request)
     {
-        $userService = new UserService($request->userId);
-        $userService->create();
-
-        return response('ok');
+        return redirect(route('replyAction', ['userId' => $request->userId]));
     }
 }

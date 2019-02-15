@@ -11,7 +11,7 @@
         <input type="hidden" name="userId" value="{{ $userId }}">
         <div class="form-group">
             <label for="studentId">學號</label>
-            <input type="email" class="form-control" id="studentId" name="studentId" placeholder="請輸入菁英學號">
+            <input type="text" class="form-control" id="studentId" name="studentId" placeholder="請輸入菁英學號">
         </div>
         <div class="form-group">
             <label for="studentPassword">密碼</label>

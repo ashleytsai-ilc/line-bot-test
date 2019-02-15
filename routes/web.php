@@ -13,7 +13,7 @@
 
 Route::post('/', 'LineBotController');
 
-Route::post('/sendText', 'LineBotController@sendText');
+Route::get('/sendText', 'LineBotController@sendText');
 Route::get('/reply_action/{userId}', 'BindStudentController@certification')->name('replyAction');
 
 Route::post('/bind', 'BindStudentController@bind')->name('bind');
