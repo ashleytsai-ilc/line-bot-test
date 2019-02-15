@@ -59,7 +59,7 @@ class TemplateService
         $thumbnailImageUrl = 'https://scontent.ftpe8-1.fna.fbcdn.net/v/t1.0-9/13567248_1402023999824169_896253512501907636_n.jpg?_nc_cat=109&_nc_ht=scontent.ftpe8-1.fna&oh=61df15a39e3c48cb97411861ffc07c32&oe=5CFC51EA';
 
         // 卡片中選項的template
-        $bindActionBuilder = new UriTemplateActionBuilder('學員綁定', 'https://linebot1-test.herokuapp.com/reply_action/' . $this->userId);
+        $bindActionBuilder = new UriTemplateActionBuilder('學員綁定', route('replyAction', ['userId' => $this->userId]));
         $carActionBuilder = new MessageTemplateActionBuilder('Carousel Template', 'Carousel Template');
         $btnActionBuilder = new MessageTemplateActionBuilder('Buttons Template', 'Buttons Template');
         $confActionBuilder = new MessageTemplateActionBuilder('Confirm Template', 'Confirm Template');
