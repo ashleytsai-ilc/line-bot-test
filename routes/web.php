@@ -14,5 +14,7 @@
 Route::post('/', 'LineBotController');
 
 Route::post('/sendText', 'LineBotController@sendText');
-Route::post('/reply_action', 'EchoBotController@replyMsg');
+Route::get('/reply_action/{userId}', 'BindStudentController@certification');
+
+Route::post('/bind', 'BindStudentController@bind')->name('bind');
 

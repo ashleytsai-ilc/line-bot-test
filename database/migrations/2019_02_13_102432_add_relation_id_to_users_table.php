@@ -15,7 +15,7 @@ class AddRelationIdToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('line_id', 100)->comment('line提供的唯一id');
-            $table->string('student_id', 20)->comment('學號');
+            $table->string('student_id', 20)->nullable()->comment('學號');
         });
     }
 

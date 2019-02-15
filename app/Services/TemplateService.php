@@ -8,6 +8,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
+use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 
 class TemplateService
 {
@@ -17,11 +18,14 @@ class TemplateService
 
     protected $userText;
 
+    protected $userId;
+
     public function __construct($bot, $event)
     {
         $this->bot = $bot;
         $this->replyToken = $event->getReplyToken();
         $this->userText = $event->getText();
+        $this->userId = $event->getUserId();
 
         switch ($this->userText) {
         case 'help':
@@ -55,12 +59,13 @@ class TemplateService
         $thumbnailImageUrl = 'https://scontent.ftpe8-1.fna.fbcdn.net/v/t1.0-9/13567248_1402023999824169_896253512501907636_n.jpg?_nc_cat=109&_nc_ht=scontent.ftpe8-1.fna&oh=61df15a39e3c48cb97411861ffc07c32&oe=5CFC51EA';
 
         // 卡片中選項的template
+        $bindActionBuilder = new UriTemplateActionBuilder('學員綁定', 'https://linebot1-test.herokuapp.com/reply_action/' . $this->userId);
         $carActionBuilder = new MessageTemplateActionBuilder('Carousel Template', 'Carousel Template');
         $btnActionBuilder = new MessageTemplateActionBuilder('Buttons Template', 'Buttons Template');
         $confActionBuilder = new MessageTemplateActionBuilder('Confirm Template', 'Confirm Template');
 
         // 卡片的template
-        $templateColumnBuilder = new CarouselColumnTemplateBuilder('This is title', 'This is text', $thumbnailImageUrl, [$carActionBuilder, $btnActionBuilder, $confActionBuilder]);
+        $templateColumnBuilder = new CarouselColumnTemplateBuilder('This is title', 'This is text', $thumbnailImageUrl, [$bindActionBuilder, $carActionBuilder, $btnActionBuilder, $confActionBuilder]);
         
         // 建立多張卡片
         $templateBuilder = new CarouselTemplateBuilder([$templateColumnBuilder, $templateColumnBuilder, $templateColumnBuilder]);

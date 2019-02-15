@@ -16,6 +16,8 @@ use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use App\Services\DictionaryService;
 use App\Services\TemplateService;
 use Illuminate\Support\Facades\Log;
+use LINE\LINEBot\Event\FollowEvent;
+use App\Services\UserService;
 
 class LineBotController extends Controller
 {
@@ -50,6 +52,11 @@ class LineBotController extends Controller
             if ($event instanceof MessageEvent) {
                 if ($event instanceof TextMessage) {
                     $response = new TemplateService($this->bot, $event);
+                }
+            } elseif ($event instanceof OtherEvent) {
+                if ($event instanceof FollowEvent) {
+                    $userService = new UserService($this->bot, $event);
+                    $userService->create();
                 }
             }
         }
