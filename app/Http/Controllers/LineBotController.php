@@ -54,6 +54,7 @@ class LineBotController extends Controller
                     $response = new TemplateService($this->bot, $event);
                 }
             } elseif ($event instanceof OtherEvent) {
+                dd(123);
                 if ($event instanceof FollowEvent) {
                     $userService = new UserService($this->bot, $event);
                     $userService->create();
@@ -66,17 +67,9 @@ class LineBotController extends Controller
 
     public function sendText(Request $request)
     {
-        // 卡片的圖像
-        $thumbnailImageUrl = 'https://i.ytimg.com/vi/GNnM-LSa5OQ/maxresdefault.jpg';
+        $userService = new UserService($request->userId);
+        $userService->create();
 
-        // 卡片中選項的template
-        $actionBuilder = new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('只有一個按鈕', '只有一個按鈕');
-        
-        // 組合成規定陣列
-        $templateBuilder = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder('This is button title', 'This is button text', $thumbnailImageUrl, [$actionBuilder]);
-        
-        $templateMsg = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('This is buttons template', $templateBuilder);
-
-        return response()->json($templateMsg->buildMessage());
+        return response('ok');
     }
 }
