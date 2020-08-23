@@ -43,6 +43,10 @@ class TemplateService
             $templateMsg = $this->confirmTemplate();
             break;
 
+        case '啟動應聲蟲模式':
+            $templateMsg = $this->echoBot();
+            break;
+
         default:
             $templateMsg = [$this->default()];
             break;
@@ -62,7 +66,7 @@ class TemplateService
         $bindActionBuilder = new UriTemplateActionBuilder('學員綁定', route('replyAction', ['userId' => $this->userId]));
         // $carActionBuilder = new MessageTemplateActionBuilder('Carousel Template', 'Carousel Template');
         $btnActionBuilder = new MessageTemplateActionBuilder('Buttons Template', 'Buttons Template');
-        $confActionBuilder = new MessageTemplateActionBuilder('啟動應聲蟲模式', $this->echoBot());
+        $confActionBuilder = new MessageTemplateActionBuilder('啟動應聲蟲模式', '啟動應聲蟲模式');
 
         // 卡片的template
         $templateColumnBuilder = new CarouselColumnTemplateBuilder('This is title', 'This is text', $thumbnailImageUrl, [$bindActionBuilder, $btnActionBuilder, $confActionBuilder]);
@@ -116,14 +120,9 @@ class TemplateService
 
     public function echoBot()
     {
-        return $this->bot->replyMessage(
-            ['replyToken' => $this->replyToken,
-            'messages' => [
-                [
-                    'type' => 'text',
-                    'text' => $this->userText
-                ]
-            ]]
-        );
+        return [
+            'type' => 'text',
+            'text' => $this->userText
+        ];
     }
 }
