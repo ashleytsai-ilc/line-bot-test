@@ -50,7 +50,8 @@ class TemplateService
 
         default:
             if (starts_with($this->userText, '::')) {
-                $templateMsg = new TextMessageBuilder($this->userText);
+                $reply = str_replace('::', '', $this->userText);
+                $templateMsg = new TextMessageBuilder($reply);
             } else {
                 $templateMsg = new TextMessageBuilder('輸入help、?或選單可查詢功能');
             }
