@@ -44,7 +44,7 @@ class TemplateService
             break;
 
         default:
-            $templateMsg = $this->default();
+            $templateMsg = [$this->default()];
             break;
         }
         // 藉由replyMessage送出
