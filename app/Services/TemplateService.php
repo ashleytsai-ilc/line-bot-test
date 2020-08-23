@@ -62,7 +62,7 @@ class TemplateService
         $bindActionBuilder = new UriTemplateActionBuilder('學員綁定', route('replyAction', ['userId' => $this->userId]));
         // $carActionBuilder = new MessageTemplateActionBuilder('Carousel Template', 'Carousel Template');
         $btnActionBuilder = new MessageTemplateActionBuilder('Buttons Template', 'Buttons Template');
-        $confActionBuilder = new MessageTemplateActionBuilder('Confirm Template', 'Confirm Template');
+        $confActionBuilder = new MessageTemplateActionBuilder('啟動應聲蟲模式', $this->echoBot());
 
         // 卡片的template
         $templateColumnBuilder = new CarouselColumnTemplateBuilder('This is title', 'This is text', $thumbnailImageUrl, [$bindActionBuilder, $btnActionBuilder, $confActionBuilder]);
@@ -112,5 +112,18 @@ class TemplateService
             'type' => 'text',
             'text' => '輸入help，?或選單可查詢功能'
         ];
+    }
+
+    public function echoBot()
+    {
+        return $this->bot->replyMessage(
+            ['replyToken' => $this->replyToken,
+            'messages' => [
+                [
+                    'type' => 'text',
+                    'text' => $this->userText
+                ]
+            ]]
+        );
     }
 }
