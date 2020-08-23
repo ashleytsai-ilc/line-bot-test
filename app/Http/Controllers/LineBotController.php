@@ -27,7 +27,7 @@ class LineBotController extends Controller
 
     protected $dictionaryService;
 
-    public function __invoke(ServerRequestInterface $req, ResponseInterface $res)
+    public function callback(ServerRequestInterface $req, ResponseInterface $res)
     {
         $this->httpClient = new CurlHTTPClient(env('LINEBOT_TOKEN'));
         $this->bot = new LINEBot($this->httpClient, 

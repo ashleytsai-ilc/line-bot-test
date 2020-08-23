@@ -11,7 +11,7 @@
 |
 */
 
-Route::post('/', 'LineBotController');
+Route::post('/', 'LineBotController@callback');
 
 Route::get('/sendText', 'LineBotController@sendText');
 Route::get('/reply_action/{userId}', 'BindStudentController@certification')->name('replyAction');
