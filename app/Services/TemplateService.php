@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
+use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
@@ -44,11 +45,16 @@ class TemplateService
             break;
 
         case '啟動應聲蟲模式':
-            $templateMsg = $this->echoBot();
+            $templateMsg = new TextMessageBuilder('在訊息的最前面加入雙冒號::即可啟動應聲蟲模式');
             break;
 
         default:
-            $templateMsg = [$this->default()];
+            if (starts_with($this->userText, '::')) {
+                $templateMsg = new TextMessageBuilder($this->userText);
+            } else {
+                $templateMsg = new TextMessageBuilder('輸入help、?或選單可查詢功能');
+            }
+            
             break;
         }
         // 藉由replyMessage送出
@@ -60,7 +66,7 @@ class TemplateService
     public function carouselTemplate()
     {
         // 卡片的圖像
-        $thumbnailImageUrl = 'https://scontent.ftpe8-1.fna.fbcdn.net/v/t1.0-9/13567248_1402023999824169_896253512501907636_n.jpg?_nc_cat=109&_nc_ht=scontent.ftpe8-1.fna&oh=61df15a39e3c48cb97411861ffc07c32&oe=5CFC51EA';
+        $thumbnailImageUrl = 'https://dvblobcdnjp.azureedge.net//Content/ueditor/net/upload1/2019-09/543c23c9-e311-4926-9714-e256773e59de.jpg';
 
         // 卡片中選項的template
         $bindActionBuilder = new UriTemplateActionBuilder('學員綁定', route('replyAction', ['userId' => $this->userId]));
@@ -108,21 +114,5 @@ class TemplateService
         $templateMsg = new TemplateMessageBuilder('This is confirm template', $templateBuilder);
 
         return $templateMsg;
-    }
-
-    public function default()
-    {
-        return [
-            'type' => 'text',
-            'text' => '輸入help，?或選單可查詢功能'
-        ];
-    }
-
-    public function echoBot()
-    {
-        return [
-            'type' => 'text',
-            'text' => $this->userText
-        ];
     }
 }
